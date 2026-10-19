@@ -131,7 +131,7 @@ It is slow, and it is strongest for product and brand films.
 
 ## Inside the repo
 
-`SKILL.md` is the entry point. `references/` holds the craft (timing, words, sound, brand, the checks before the first cut, the reviewer's brief, the illustrated looks). `scripts/` holds the tools (machine check, frames, export, quality gate, text audit, sound check, review room).
+`SKILL.md` is the entry point. `references/` holds the craft (timing, words, sound, brand, the checks before the first cut, the reviewer's brief, the illustrated looks). `scripts/` holds the tools (machine check, frames, export, quality gate, text audit, picture audit, sound check, review room).
 
 ## Credits
 

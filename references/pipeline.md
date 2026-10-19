@@ -60,9 +60,22 @@ Run it at the stills gate and again before the reviewer. It draws the film frame
 - **FLASH**: a caption or card that is not up long enough to read (0.4 s plus 0.2 s a word). A line typed letter by letter in one place (a prompt) counts as one piece from its first letter. A fast roll (a count whose name changes every beat, read at one fixed spot) flags on every name: it is not a caption, so pass the names to `--ignore` and tell the reviewer it is a roll. When the film replays itself inside a small player (a rewind, a film in the film), set `window.TEXT_AUDIT_SKIP = true` while that inner picture is drawn and back to `false` after: its words are picture, not captions.
 - **EDGE**, **PINNED**, **LONG**: text partly out of the frame, small text parked in a corner for six seconds in all, one big line held past six seconds.
 - **FACE**: text on a face, when the film defines `window.FACES = (t) => [[x, y, w, h], ...]` in canvas pixels.
+- **BROKEN**: a value that failed to compute, on screen for any length of time: `NaN`, `undefined`, `Infinity` or `[object Object]` as a word (FAIL; a lone `null` is a WARN). A counter whose start value a timing script had moved to -1.1 showed "NaN" across a whole beat, and nobody saw it until the owner did.
 - **OVERLAP**: two different texts printed on top of each other and sitting still for 0.3 s or more (FAIL): a label over a label, a caption over a number. One moving across the other, or a huge word across small text, is a WARN to look at. The same text drawn twice (an outline, a glow, a counter changing its value) and single letters (a rolling digit) are left alone. It does not know about masks, so text hidden under a clip can still be reported; skip it with `--ignore`.
 
 A FAIL is fixed. A WARN is a lead: look, then fix it or say why it stays. On one product ad the first cut had 15 fails, all things a fresh reviewer later named (status chips, tags, a note that flashed for 0.4 s); the delivered cut had 4. It sees only text the page draws itself, not words inside pictures, and it reads size, not contrast, so the 360 px sheet still gets read by eye.
+
+## Plate audit (soft pictures: enlarged or mixed frames)
+
+```bash
+node <skill>/scripts/plate-audit.mjs                 # film.html in this folder
+node <skill>/scripts/plate-audit.mjs cut.html --step 0.05 --min-area 0.15 --json plates.json
+```
+Run it next to the text audit, before the reviewer, on any film with photos or footage. It records every `drawImage` the page makes while it draws each sampled frame, keeps the big ones (a picture covering a fifth of the frame or more), and reports:
+- **UPSCALE**: a picture drawn bigger than its own pixels: WARN above 1.12x for half a second or more, FAIL at 1.2x or more. A 1080p clip pushed to 1.3x for a "closer shot" was the shot the owner called blurry; the fix was a new clip at its own size, not a sharpening pass.
+- **BLEND**: two different frames of one clip laid over each other in the same place, one see-through, for 0.25 s or more: slow motion made by mixing frames, which ghosts faces (WARN). Play the clip at its own speed, end the shot earlier, or hold clean frames.
+
+Frames from one folder (`assets/seq/<clip>/f012.jpg`) or one video file count as one clip. SVG pictures and small pictures (tiles, icons, logos) are left out. A picture drawn onto an off-screen canvas at least half the frame's width is measured against that canvas. It cannot see sharpness inside the source itself (a soft clip at 1.0x passes), so still look at faces at full size next to the raw clip. Set `window.PLATE_AUDIT_SKIP = true` while drawing something that is enlarged on purpose (a deliberately soft background).
 
 ## Edge audit (pictures and shapes cut by an edge)
 
@@ -148,6 +161,7 @@ START=26.5 END=32.5 node export.mjs 24 fix-b.mp4      # renders frames round(STA
 ```
 Splice by frame index into the previous master (`trim=start_frame=..:end_frame=..` for the untouched parts, `concat` in order), one re-encode at CRF 14. Make each range cover the whole changed shot plus a few frames either side; frames are deterministic, so the overlap is identical. Then verify alignment: the PSNR of the untouched regions against the old master should be above 40 dB (one app-builder film: 44-57 dB). A one-frame slip drops it far lower.
 - To add a held ending, raise `FILM_DURATION` and render only the new tail, then concat.
+- **A script that moves part of the film later moves times, never values.** Adding one bar to every `from` and `to` after a point also moved a counter's start and end values (1 became -1.1), and its climb printed "NaN" for a whole beat. Shift only the keys that are times, list every value the script touched, and run the text audit after (its BROKEN rule catches a failed value on screen).
 - **Joining without a re-encode (`-c copy`): cut only at a keyframe, and count packets, not seconds.** `-t 17.46 -c copy` on a 60 fps part gave the right NUMBER of frames (1050) and the wrong frames: 0 to 1048 and 1050, with 1049 missing, because the P frame comes before the B frame it is shown after. The joined film then showed one frame of the next shot a frame early. Do this instead: list the kept part's keyframes (`ffprobe -select_streams v:0 -skip_frame nokey -show_entries frame=pts_time`), take the last one at or before the change (frame K), copy exactly K packets (`ffmpeg -i part.mp4 -frames:v K -c copy head.mp4`: everything before a keyframe in file order is frames 0 to K-1), and render from K/fps on. Then prove it: the sorted packet times of `head.mp4` must be 0 to K-1 with none missing, and the joined file must have the full frame count.
 - To keep editing while a long render runs, render from a frozen copy: copy the scripts folder and point a copy of film.html at it. The page loads its scripts once, but a copy removes any doubt.
 

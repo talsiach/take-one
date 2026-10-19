@@ -20,6 +20,9 @@
 //   PINNED  small text parked in a corner zone for 6 s or more in total: a label, a counter, a name. A film is not a page.
 //   LONG    one big line (5 % of the height or more) held more than 6 s: the frame may have become a slide.
 //   FACE    text over a face, when the film exposes window.FACES = (t) => [[x, y, w, h], ...] in canvas pixels.
+//   BROKEN  a value that failed to compute, printed on screen for any length of time: NaN, undefined, Infinity or
+//           [object Object] as a word (a counter whose start was shifted to -1.1 showed "NaN" for a whole beat). FAIL.
+//           A lone "null" as a word is a WARN.
 //   OVERLAP two different texts printed on top of each other for 0.3 s or more (a label over a label, a caption over a
 //           number). It counts when the overlap covers a fifth of the smaller text's width and a quarter of its height, so
 //           a descender touching the next line or two words crossing in a transition pass. The same text drawn twice (an
@@ -129,6 +132,8 @@ for (const r of done) { const held = r.t1 - r.t0 + STEP, w = words(r.s); if (!w)
   const need = 0.4 + 0.2 * w; if (held < need && !nearEnd && r.minPx / H >= 0.035) add(held < need * 0.6 ? 'FAIL' : 'WARN', 'FLASH', r, `${w} word${w > 1 ? 's' : ''} up for ${f(held)} s, needs about ${f(need)} s`);
   if (r.edge >= 0.8 && r.maxPx / H < 0.2) add('WARN', 'EDGE', r, `partly out of the frame for ${f(r.edge)} s`);
   if (r.faceHit) add('FAIL', 'FACE', r, 'sits on a face');
+  if (/(^|[^\p{L}])(NaN|undefined|Infinity)([^\p{L}]|$)|\[object [A-Za-z]+\]/u.test(r.s)) add('FAIL', 'BROKEN', r, 'a value that failed to compute is on screen');
+  else if (/(^|[^\p{L}])null([^\p{L}]|$)/u.test(r.s)) add('WARN', 'BROKEN', r, '"null" on screen: a missing value?');
   if (r.maxPx / H < 0.05 && r.corner > 0) pinned.set(r.s, (pinned.get(r.s) || 0) + r.corner);
   if (held > 6 && w >= 2 && r.minPx / H >= 0.05) add('WARN', 'LONG', r, `held ${f(held)} s: the same frame for too long?`);
 }
