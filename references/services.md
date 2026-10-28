@@ -7,7 +7,7 @@ The skill can make a whole film in code for free. Real-looking pictures, moving 
 Put it in the pitch message, once, in plain words. List only what this film would use:
 
 > To make this the way I pitched it I would use:
-> - **Pictures** (Higgsfield, Nano Banana): about N pictures, [free on your unlimited plan / about X credits]
+> - **Pictures** (Higgsfield, Nano Banana; or Codex on your ChatGPT plan): about N pictures, [free on your unlimited plan / about X credits / from your ChatGPT plan's Codex allowance]
 > - **Moving shots** (Seedance or Kling through Higgsfield): N clips, about X credits
 > - **Voice** (ElevenLabs): one narration, about X credits
 > - **Music** (Suno): one song, [X credits / from your plan]
@@ -22,7 +22,7 @@ Put it in the pitch message, once, in plain words. List only what this film woul
 
 | The film needs | With the service | Without it |
 |---|---|---|
-| Real-looking pictures | An image model (Nano Banana through Higgsfield, or any the person has). Method: `real-shots.md`, Pictures | The person's own image tool from prompts you write, and they bring the pictures back. Or change the route: an illustrated look drawn in code, where "every frame is code" is part of the appeal |
+| Real-looking pictures | An image model (Nano Banana through Higgsfield, GPT image through Codex on a ChatGPT plan (`toolbox.md`), or any the person has). Method: `real-shots.md`, Pictures | The person's own image tool from prompts you write, and they bring the pictures back. Or change the route: an illustrated look drawn in code, where "every frame is code" is part of the appeal |
 | Moving shots | A video model (Seedance, Kling) on the few shots people look at. Method: `real-shots.md`, Moving shots | The pictures move in code (camera, parallax, bursts): honest ceiling about 7 of 10 for a film meant to feel filmed. Or an illustrated film animated fully in code |
 | A voice | A speech service (ElevenLabs): cast from two or three samples of the real lines, the person picks by ear. Method: `voice.md` | The person records the lines themselves (often the best choice for a founder). Or no voice: the words carry on screen with music (`words.md`) |
 | Music | A song service (Suno): a song whose words are the film's own lines, or an instrumental. Method: `audio.md` | Music composed in code, free, fitted to the film's exact length (`music-engine.md`). Or a track the person owns |

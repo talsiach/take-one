@@ -30,7 +30,7 @@ Understand what the user wants before proposing tools: "a cartoon of my family" 
 | Need | Best tool | Cost notes |
 |---|---|---|
 | Photoreal or painterly images, character sheets, pose sheets, sets, moodboards, a real person's likeness | **Nano Banana (Pro / 2.5) in the Higgsfield web UI** | Free and unlimited on a Higgsfield plan only in the **web UI** with the **Unlimited** toggle ON. The Higgsfield MCP/API bills ~1 credit per image. If the user is logged in, you can drive the web UI through Chrome (see below). |
-| Same, alternative | **GPT image (ChatGPT)** | Covered by the user's ChatGPT subscription. The user pastes your prompt; you read the downloaded result. Strong at text-in-image and UI screens. |
+| Same, alternative | **GPT image through Codex, or ChatGPT** | Covered by the user's ChatGPT plan, no charge per picture. If the user has Codex (its command-line tool, or the ChatGPT app on a Mac, which ships it), make the pictures yourself with `codex exec` (see below). Otherwise the user pastes your prompt into ChatGPT and you read the downloaded result. Strong at characters kept the same across poses, matching icon sets, text-in-image and UI screens. |
 | Moving footage, reference motion, lip-sync to a song | **Seedance 2.5 / Kling / Midjourney video** (via Higgsfield or direct) | Always credits. Read the real price before every render and say it (`references/real-shots.md`). Use for reference motion that code redraws (rotoscoping, see overnight-run.md) or for editorial footage under a code HUD. |
 | Music | **Suno** | User generates from your prompt (see audio.md). Ask for full length. |
 | Sound effects (hits, whooshes, UI ticks, risers, impacts, chimes) | **`scripts/sfx.mjs`: code-synthesized, free, deterministic** | Default. 10 kinds x variants, placed by exact film frame over the music bed with ducking, a -1 dBTP ceiling and an audibility check (see audio.md). |
@@ -41,6 +41,19 @@ Understand what the user wants before proposing tools: "a cartoon of my family" 
 | Tempo | onset autocorrelation (see audio.md) | Free. Lock the beat grid to the vocal onsets. |
 
 (On any machine, check what is installed and offer to install what is missing.)
+
+## Making pictures through Codex (when the user has ChatGPT or Codex)
+
+Codex's command-line tool has image generation built in, so with a ChatGPT plan you can make the pictures yourself, without asking the user to paste anything. It runs on the plan's usage, with no charge per picture; a big batch counts toward the plan's Codex limits and can pause it for a few hours. Check for it before the pitch (`codex --version`, and the path below). When it is there, it is usually the best free picture route, so recommend it. Ask before the first Codex run, in the pitch with the other services (`services.md`): say how many pictures, and that they come out of the ChatGPT plan's Codex allowance, not money. Run nothing until they say yes. The yes covers that number of pictures; a batch beyond it is a new question.
+
+- **Find it.** `codex --version`. On a Mac the ChatGPT app ships it inside the app even when nothing is on the PATH: `/Applications/ChatGPT.app/Contents/Resources/codex-cli/bin/codex` in newer versions, `.../Resources/codex` in older ones (`find /Applications/ChatGPT.app -name codex -type f` finds it). `codex features list` should show `image_generation` as true.
+- **One picture folder per project, named after it, and every run happens there.** Give it an `AGENTS.md` (Codex reads that file on its own in the folder it runs in) holding the project's picture rules and its style paragraphs (characters, icon set, photos), a `refs/` folder with the approved pictures, and an `out/` folder for new ones. Then each prompt only names what to make and which references to attach, the look stays the same across months and batches, and the user finds every run in Codex's history under the project's name. Run: `cd <project>-pictures && codex exec --skip-git-repo-check -s workspace-write -c model_reasoning_effort="low" -i refs/<ref>.png - < prompt.txt`. When a new picture is approved, copy it into `refs/` and name it in `AGENTS.md`.
+- **What the prompt says.** "Use your image generation tool to make N separate images, one at a time, and save each as a PNG in the current folder with the exact file name given (copy each generated file here; do not write any code to draw them). When done, reply with only the saved file paths." Then one shared style paragraph and a numbered list of pictures with their file names. Without "do not write any code" it may draw the picture with code instead.
+- **Keep a character or a set the same.** `-i picture.png` (repeat it for several) attaches references: the character's first picture keeps the same face, colours and outfit across new poses; two members of an icon set keep a new icon in the set's style.
+- **Speed.** About a minute a picture. Four `codex exec` runs side by side worked (sixteen pictures in about four minutes).
+- **Cut-outs.** Ask for a plain flat white background and cut the subject out with `swift scripts/matte.swift in.png out.png` (Mac); it kept white sea foam and a white butter dish whole. A transparent background straight from Codex was not tested.
+- **Check the set as one sheet.** Tile every picture on one sheet and look for the one drawn in another style (a hairy, realistic fly in a glossy cartoon set); a viewer reads it as a mistake. Redo it with two members of the set attached as references.
+- **Pictures that look real are still made by AI.** Say so in the delivery note, and tell the person to declare them where the platform asks (YouTube's "altered or synthetic content" box).
 
 ## Driving the Higgsfield web UI for free images (when the user is logged in)
 
