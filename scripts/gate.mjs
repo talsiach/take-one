@@ -146,9 +146,11 @@ const determinism = async (browser, base, film) => {
       const a = path.join(TMP, `a-t${fmt(times[i])}.png`), b = path.join(TMP, `b-t${fmt(times[i])}.png`);
       fs.writeFileSync(a, p1[i]); fs.writeFileSync(b, p2[i]);
       const v = psnr(a, b); worst = Math.min(worst, v);
-      console.log(`        t=${fmt(times[i])}s: hashes differ, PSNR ${v === Infinity ? 'inf' : v.toFixed(2)} dB   (pngs kept in ${TMP})`);
+      console.log(`        t=${fmt(times[i])}s: hashes differ, PSNR ${v === Infinity ? 'inf' : v.toFixed(2)} dB   (pngs in ${TMP}, removed if this check passes)`);
     }
     say(worst > 45, `${times.length - same} differing frame(s) within PSNR tolerance (> 45 dB)`, `min PSNR ${worst === Infinity ? 'inf' : worst.toFixed(2)} dB`);
+    // the comparison pictures are only worth keeping when the check fails: 80 passing runs once left 2 GB behind and filled a disk
+    if (worst > 45) fs.rmSync(TMP, { recursive: true, force: true });
     // POISONING DIAGNOSIS. A failure is only useful if it says WHERE to look: redraw the bad
     // frame cold, then after each other sample frame in a fresh page, and name the poisoner.
     const bad = times.find((_, i) => h1[i] !== h2[i]);
