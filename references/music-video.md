@@ -68,3 +68,17 @@ A 98 s Hebrew comedy clip, 8 chapters, built by 10 agents in one afternoon. What
 8. **Give the user an ETA for the final render.** p5.brush at 1080p24 ran at about 1.5 s per frame with 11 workers on a 12-core Mac, so a 98 s film took about an hour. Also export a share copy (`-crf 24`, about 90 MB instead of 250 MB) for WhatsApp, alongside the full-quality file and the chorus cut.
 
 Adjusting the user's own character: when they ask to look "a bit younger, a bit slimmer", change the rig parameters (build, jaw, hair and beard colour, drop the tired-eye lines), show a before/after strip, and keep a backup of the old file. It's their face, so flattering is fine, but it must still read as them.
+
+## A three-minute story clip (lessons from a narrative song, Oct 2026)
+
+A 3-minute clip about two friends that politics split, built in code from real photos and real phone screens, ten rounds, finished at about 8 of 10 by its owner. What moved it and what held it back:
+
+1. **The medium decides more than the polish.** The two biggest jumps came from switching illustrated pages to real photos and real phone screens, then a social feed to the group chat everyone has. Review rounds after that moved the score a few tenths each. When a story is about feeling, test the real-looking route early.
+2. **One picture, one beat.** Write a registry: every picture against the line it serves, each used once. A chorus that comes back gets new story (new places, new people, new moments), not the same pictures again; one round of reused chorus pictures cost most of a point. `plate-audit.mjs` warns on a picture back in three places (REPEAT) and on one held 8 s or more (HOLD).
+3. **The pictures carry the song for its whole length.** Ask the reviewer for a ten-second map (reviewer-brief.md) and rebuild the weakest blocks first.
+4. **Spend the strongest picture at its place.** The childhood photo belonged after the second verse; shown in the first chorus it emptied the later payoff.
+5. **Words when sung, the picture leads.** Each sung word appears exactly on its time from the song map, as a small caption under the picture. A big lyric band competes with the picture; big type is for the hook only.
+6. **Give reading time.** Phone screens and chats were the story and kept flashing by; see before-the-first-cut.md, section 5.
+7. **Real objects from real photos, the same people throughout.** See before-the-first-cut.md, section 9.
+8. **Plan the vertical cut from day one.** A 60 s 9:16 short was recomposed at the end from the wide film (crops per shot, two people as a top and bottom split); framing for both from the start is cheaper.
+9. **Two heavy agents at a time.** Five chapter agents in parallel finished the week's usage overnight. Build chapters two at a time, or give the small fixes to a lighter model.

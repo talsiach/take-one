@@ -14,6 +14,13 @@
 //   BLEND    two different frames of the same clip laid over each other at the same place, one of them see-through: slow motion
 //            made by mixing frames. Faces get a ghost outline and smear. WARN when it lasts 0.25 s or more. Play the clip at 1x,
 //            hold clean frames instead of mixing them, or end the shot earlier.
+//   HOLD     one still picture on screen for 8 s or more without a cut. In a long film (a song, a story) the pictures carry the
+//            film; one photo parked for 8 s reads as a slide, even with a slow push. WARN: fine if a real change happens over it
+//            (a screen updating, a person moving in), otherwise cut to the next picture or give it a new move.
+//   REPEAT   one picture back on screen in three or more separate places. A returning chorus over the same pictures reads as
+//            "the same visuals again"; one return is a callback and passes. WARN.
+//   Pictures that cover nearly the whole frame for most of the film (a paper or texture background) are left out of HOLD
+//   and REPEAT.
 //
 // What counts as the same clip: frames from one folder (assets/seq/<clip>/f012.jpg) or one video file. SVG pictures are left out
 // (they stay sharp at any size), and so are small pictures (icons, tiles in a wall, logos).
@@ -127,6 +134,22 @@ for (const smp of samples) {
 }
 blDone.push(...bl.values());
 for (const r of blDone) { const held = r.t1 - r.t0 + STEP; if (held >= 0.25) finds.push({ sev: 'WARN', rule: 'BLEND', t0: r.t0, t1: r.t1, clip: nameOf(r.clip), why: `two frames of one clip mixed for ${f(held)} s: slow motion by blending ghosts faces` }); }
+// HOLD and REPEAT: stretches where each still picture (not a clip of frames or a video) is on screen, opaque enough to see
+const isStill = (c) => !c.endsWith('/') && !/\.(mp4|webm|mov)(\?|$)/i.test(c);
+const on = new Map();   // clip -> [{t0, t1}]
+for (const smp of samples) {
+  const seen = new Map(); for (const d of smp.img) { const c = clipOf(d.id); if (d.a >= 0.5 && isStill(c)) seen.set(c, Math.max(seen.get(c) || 0, d.area)); }
+  for (const [c, area] of seen) { if (!on.has(c)) on.set(c, { runs: [], full: 0 }); const o = on.get(c), r = o.runs[o.runs.length - 1];
+    if (area >= 0.95) o.full += STEP;
+    if (r && smp.t - r.t1 <= STEP * 2.5) r.t1 = smp.t; else o.runs.push({ t0: smp.t, t1: smp.t }); }
+}
+for (const [c, o] of on) {
+  if (o.full >= 0.5 * D) continue;   // a background: paper, texture, the set itself
+  for (const r of o.runs) { const held = r.t1 - r.t0 + STEP;
+    if (held >= 8) finds.push({ sev: 'WARN', rule: 'HOLD', t0: r.t0, t1: r.t1, clip: nameOf(c), why: `one picture on screen for ${f(held)} s: cut to the next one or give it a new move, unless something real changes over it` }); }
+  const places = o.runs.filter((r) => r.t1 - r.t0 + STEP >= 0.5);
+  if (places.length >= 3) finds.push({ sev: 'WARN', rule: 'REPEAT', t0: places[0].t0, t1: places[places.length - 1].t1, clip: nameOf(c), why: `on screen in ${places.length} separate places (${places.map((r) => f(r.t0)).join(', ')} s): a chorus that comes back needs new pictures` });
+}
 finds.sort((a, b) => (a.sev === b.sev ? a.t0 - b.t0 : a.sev === 'FAIL' ? -1 : 1));
 const fails = finds.filter((x) => x.sev === 'FAIL').length, warns = finds.length - fails;
 const clips = new Set(samples.flatMap((s) => s.img.map((d) => clipOf(d.id))));

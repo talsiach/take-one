@@ -28,6 +28,7 @@ Run `node <skill>/scripts/text-audit.mjs` from the film folder first: it measure
 ## 5. Payoffs get time
 - The beat the story turns on holds at least 1.2 s after it lands, on screen and before the cut. A payoff that lands 0.4 s before a cut was not seen.
 - The one thing to do (the button, the link) holds three seconds or more. It is never the shortest hold in the film.
+- A screen the viewer must read (a chat, a phone, a document) holds about 0.3 s a word plus 1 s and moves slowly while it is read. Fill the frame with it while it is read, then go back. `text-audit.mjs` cannot see words inside pictures or rendered screens, so time these by hand. No time to read it: do not show it.
 
 ## 6. Nothing sits on what matters
 - Not on a face, not on the hand doing the action, not on the thing the person is looking at (a phone, a page).
@@ -41,3 +42,7 @@ Run `node <skill>/scripts/text-audit.mjs` from the film folder first: it measure
 
 ## 8. Only what the product does
 - Every screen shows something the product really does, or is plainly an illustration the person agreed to (`SKILL.md`, step 1c). List the illustrated screens now; the list goes in the delivery note.
+
+## 9. Real things look like the real thing
+- Every real object in the story (a ballot box, a form, a uniform, a shop, an app screen) is made from real reference photos collected before the build, down to colour and material. Viewers know these from life and catch them first.
+- Real-world logic holds: a lift does not move while its door is held, a clock never runs backwards between scenes, the same person keeps the same face from the first shot to the last.

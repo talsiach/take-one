@@ -38,7 +38,11 @@ Then fill in `WORDS-AND-SOUND.md` in the pack: who the film is for and where it 
 > 3. The three worst problems, each with a timestamp and what exactly is wrong.
 > 4. Anything that looks off, cheap or wrong at full size (hands, people, type, edges).
 > 5. Verdict: PASS if every axis is 8 or more, otherwise RETURN.
+>
+> [For a film over 60 s, add: 6. A ten-second map: one score per 10 s block for "does the picture carry the film here", with the weakest blocks named. It finds the slow stretches that a single score hides.]
 
 ## When the owner's taste and the reviewer disagree
 
 Both are in the room for a reason: the taste knows the owner, the reviewer stands in for a stranger. On a film made this way the two agreed on every large problem (weak drawing in the first frame, the loudest moment landing on an empty picture, people who read as icons). They split twice, both times on words: the taste asked for key words only and for a phrase to be said once; the stranger then could not follow the film muted, and called unlabelled cards "empty boxes". When they split on whether a viewer can follow, the stranger wins, because that is the one thing the owner cannot judge from inside.
+
+On a three-minute song clip the fresh reviewer scored every cut 0.5 to 1.5 points above the owner, and stopped moving at about 7.5. The owner's own notes, pinned on frames, moved the score more than another review round did. When the score stalls, show the person; do not run a fourth reviewer.
