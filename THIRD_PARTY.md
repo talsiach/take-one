@@ -16,6 +16,7 @@ The files adapted from anidoodle stay under the Apache License 2.0. Everything e
 | What | Where | Upstream | Licence |
 |---|---|---|---|
 | Closed-form springs, launch-video motion moves, the axes of the review score and the subframe motion-blur filter (Raphael Aubry) | `scripts/springs.js` (own implementation), `references/motion-kit.md`, `references/timing.md`, the rubric in `SKILL.md` and `references/quality-checklist.md`, one filter line in `scripts/export.mjs` | github.com/howseen-ai/claude-motion-design | MIT |
+| Character life: blinks placed on head turns with their timings, pose chains that never stop dead, follow-through as a delayed copy of the parent (rossark0) | `references/character-life.md`, `scripts/life.js` (own implementation) | github.com/rossark0/rossark-motion-skill | MIT |
 | Asking of every shot whether it is a page or a picture, and measuring a film's text with a script (Tejas Makwana) | `references/page-or-picture.md`, `scripts/text-audit.mjs` (own script; its corner test uses the same thresholds) | github.com/Tejashmakwana/motionmaxxing | Apache-2.0 |
 | Banning the default look by name, a number in place of every adjective, and the easing, spring and stagger numbers (Florence, "Opus 5.5 Motion Lab") | `references/directed-look.md`, sections 1 and 3 (own words) | x.com/flxrnc/status/2105311836190978392 | A published guide; ideas only, none of its text or prompts |
 
