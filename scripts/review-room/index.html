@@ -23,6 +23,10 @@ textarea{width:100%;min-height:92px;padding:10px 12px;resize:vertical}#compose .
 .note img{width:112px;border-radius:6px;cursor:pointer;display:block;background:#000}.note .t{font-size:13px;color:var(--accent);cursor:pointer}.note .x{font-size:13px;color:var(--dim);cursor:pointer;margin-left:10px}
 .note p{margin:4px 0 0;white-space:pre-wrap}.note.done p{color:var(--dim);text-decoration:line-through}.empty{color:var(--dim);padding:18px 0}
 #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--ok);color:#0c1a10;padding:10px 16px;border-radius:10px;font-weight:650;display:none}
+/* phone: one column, the picture first at its own shape, the notes under it */
+@media (max-width:820px){html,body{height:auto}header{flex-wrap:wrap;gap:10px;padding:12px 14px}header .brand img{height:30px}header label{flex:1 1 100%;display:flex;align-items:center;gap:8px}header select{flex:1;min-width:0}header>span[style]{display:none}#send{flex:1 1 100%}
+main{display:block;height:auto}#left{padding:12px 14px;overflow:visible}#stage.two{grid-template-columns:1fr}#stage:not(.two) .tag{display:none}.vid{aspect-ratio:auto}.vid video{height:auto}
+#bar{flex-wrap:wrap}#seekwrap{flex:1 1 100%;order:-1}#time{min-width:0}#right{border-left:0;border-top:1px solid var(--line)}#list{overflow:visible}}
 </style></head><body>
 <header><span class="brand"><img src="/logo/take-one-logo.svg" alt="Take One"><h1>Review room</h1></span><label>Cut <select id="cut"></select></label><label>Compare with <select id="cmp"><option value="">nothing</option></select></label><span style="flex:1"></span><button class="go" id="send">Send notes to Claude</button></header>
 <main><section id="left">
