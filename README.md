@@ -34,6 +34,23 @@ The second line checks your machine and says what is missing and what each piece
 
 You need Claude Code, Node 18 or later, Google Chrome and ffmpeg. So far it has been run on macOS only.
 
+### Works best with (optional)
+
+Nothing paid is needed. The code-only way is free: type, shapes, motion, product screens and code-made sound, all rendered on your computer. Code can't make a real-looking person, a real place, a camera moving through a scene or a human voice. For those, these are the two accounts I recommend, and between them they cover most of it:
+
+- **[Higgsfield](https://higgsfield.ai?fpr=tal-277c7a)** puts the leading image and video models behind one account and one set of credits, so you don't need a separate subscription for each.
+  - **Pictures:** Nano Banana for real-looking people, places and products, and for keeping the same face or product across shots.
+  - **Moving shots:** Seedance 2.5 and Kling turn a picture into a few seconds of real motion: a walk, a turn, a camera push-in.
+  - Take One writes the prompts, reads the real price first, asks before it spends, and cuts the shots into the film.
+- **[ElevenLabs](https://try.elevenlabs.io/take-one)** for every kind of voice:
+  - **Your own voice:** clone it from a short recording and the film is narrated by you.
+  - **A new voice:** describe it ("warm, low, a little tired, British") and it designs one.
+  - **Ready voices:** pick from a large library of voices in many languages and accents.
+  - **Sound effects:** describe a sound and it makes it. Take One makes hits, whooshes and clicks in code, and uses ElevenLabs for real-world sounds code can't make (a crowd, a dog, rain, footsteps), or for any sound if you'd rather.
+  - Take One writes the lines, asks which voice you want, makes the voice and sounds in your account and fits them to the cut.
+
+Both are affiliate links.
+
 ## How to work with it
 
 ### 1. Say what you want
@@ -110,7 +127,7 @@ If you keep your own taste in a file (a `TASTE.md`, a voice guide, an agent that
 ## What it costs
 
 - **Your Claude usage.** A 30 second film built in one session is roughly 0.4 to 0.7 million tokens and one to two hours. Longer films cost more; splitting the build across agents is faster and costs several times more. These are estimates; it tells you the size before it starts.
-- **Credits, only if you say yes.** The code-only way is free. Pictures and moving shots (it knows Higgsfield, with Nano Banana, Seedance and Kling), a voice (ElevenLabs) and music (Suno) are used through accounts you already have. It reads the real price first and asks. None of them is required. When it points you to Higgsfield or ElevenLabs for a new account, the link is Tal's affiliate or partner link and it says so; you can always sign up on their sites directly.
+- **Credits, only if you say yes.** The code-only way is free. Pictures and moving shots (it knows Higgsfield, with Nano Banana, Seedance and Kling), a voice (ElevenLabs) and music (Suno) are used through accounts you already have. It reads the real price first and asks. None of them is required. When it points you to Higgsfield or ElevenLabs for a new account, it uses the same links as above and says so.
 
 ## What to expect
 
